@@ -1,0 +1,26 @@
+name: Build in Copr
+description: Action that build a copr project through Packit
+inputs:
+  path:
+    description: Working directory where .packit.yaml is
+    required: false
+  owner:
+    description: Copr user/group
+    required: false
+  project:
+    description: Copr project
+    required: false
+  package:
+    description: Packit package to build
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Run packit build in-copr
+      run: >
+        packit build in-copr --wait
+        ${{ inputs.owner && format('--owner={0}', inputs.owner) }}
+        ${{ inputs.project && format('--project={0}', inputs.project) }}
+        ${{ inputs.package && format('--package={0}', inputs.package) }}
+      shell: bash
+      working-directory: ${{ inputs.path }}

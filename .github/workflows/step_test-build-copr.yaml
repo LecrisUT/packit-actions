@@ -1,0 +1,19 @@
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  test-default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get example project
+        uses: actions/checkout@v4
+        with:
+          repository: packit/hello-world
+          path: hello-world
+      - uses: ./setup-packit
+      - uses: ./build-copr
+        with:
+          path: hello-world

@@ -20,9 +20,13 @@ jobs:
   setup-packit:
     uses: ./.github/workflows/step_test-setup-packit.yaml
 
+  build-copr:
+    needs: [setup-packit]
+    uses: ./.github/workflows/step_test-build-copr.yaml
+
   pass:
     name: ✅ Pass
-    needs: [setup-packit]
+    needs: [setup-packit, build-copr]
     runs-on: ubuntu-latest
     steps:
       - name: Check all CI jobs

@@ -17,8 +17,12 @@ concurrency:
 permissions: {}
 
 jobs:
+  setup-packit:
+    uses: ./.github/workflows/step_test-setup-packit.yaml
+
   pass:
     name: ✅ Pass
+    needs: [setup-packit]
     runs-on: ubuntu-latest
     steps:
       - name: Check all CI jobs
